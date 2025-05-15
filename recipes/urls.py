@@ -1,13 +1,10 @@
-from django.urls import path
-from . import views
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import RecipeViewSet
 
-@api_view(['GET'])
-def api_root(request):
-    return Response({"message": "Welcome to the Recipe API!"})
+router = DefaultRouter()
+router.register(r'recipes', RecipeViewSet)
 
 urlpatterns = [
-    path('', api_root),
-    path('recipes/', api_root),  # placeholder for future recipe list
+    path('', include(router.urls)),
 ]
